@@ -473,6 +473,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6760251163028634948, guid: fde76cba997f7af4fbf9305ff391db2a,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760251163028634948, guid: fde76cba997f7af4fbf9305ff391db2a,
+        type: 3}
+      propertyPath: m_Range
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6760251163028634949, guid: fde76cba997f7af4fbf9305ff391db2a,
         type: 3}
       propertyPath: m_Name
@@ -862,7 +872,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 9c03ec415f0886a439b0e5ead85a84ae,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9c03ec415f0886a439b0e5ead85a84ae,
         type: 3}
@@ -1450,7 +1460,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0, g: 1, b: 0.11198902, a: 1}
   m_Intensity: 1
-  m_Range: 6.917628
+  m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1481,7 +1491,7 @@ Light:
       e33: 1
     m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
+  m_DrawHalo: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -1593,6 +1603,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9176927705328061572, guid: 67426b652cf4ddc46893a86d178ff8aa,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9176927705328061572, guid: 67426b652cf4ddc46893a86d178ff8aa,
+        type: 3}
+      propertyPath: m_Range
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9176927705328061573, guid: 67426b652cf4ddc46893a86d178ff8aa,
         type: 3}
       propertyPath: m_Name
@@ -1666,6 +1686,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUpAmmo
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147934221456999877, guid: bd4d274663ded604daeff369ac7c94e1,
+        type: 3}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147934221456999877, guid: bd4d274663ded604daeff369ac7c94e1,
+        type: 3}
+      propertyPath: m_Range
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6147934221456999930, guid: bd4d274663ded604daeff369ac7c94e1,
         type: 3}

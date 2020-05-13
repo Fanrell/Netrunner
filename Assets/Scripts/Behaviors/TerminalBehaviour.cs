@@ -16,9 +16,9 @@ public class TerminalBehaviour : MonoBehaviour
 
     private void ChangeIntense()
     { 
-        illumine.intensity += intens * Time.deltaTime;
-        if (illumine.intensity >= intensMax) intens = -0.5f;
-        else if (illumine.intensity <= 0) intens = 0.5f;
+        illumine.range += intens * Time.deltaTime;
+        if (illumine.range >= intensMax) intens = -0.5f;
+        else if (illumine.range <= 0) intens = 0.5f;
     }
 
     // Update is called once per frame
