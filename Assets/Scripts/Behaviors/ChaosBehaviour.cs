@@ -16,7 +16,7 @@
     {
         if(hpBoost < 3)
         {
-            hpBoost += 1f;
+            hpBoost += 0.5f;
         }
     }
 
@@ -24,7 +24,7 @@
     {
         if(dmgBoost < 2)
         {
-            dmgBoost += 0.1f;
+            dmgBoost += 0.3f;
         }
     }
 }
