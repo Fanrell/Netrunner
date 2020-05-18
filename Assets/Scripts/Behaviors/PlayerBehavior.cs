@@ -83,11 +83,6 @@ public class PlayerBehavior : CreaturesBehavior
 			speed -= predkoscBiegania;
 		}
 
-/*		if(Input.GetKeyDown(KeyCode.Mouse0))
-		{
-			weapon.shooted();
-		}*/
-
 		//Tworzymy wektor odpowiedzialny za ruch.
 		//rochLewoPrawo - odpowiada za ruch lewo/prawo,
 		//aktualnaWysokoscSkoku - odpowiada za ruch góra/dół,
