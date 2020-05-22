@@ -25,6 +25,7 @@ public class PlayerBehavior : CreaturesBehavior
 	public float myszGoraDol = 0.0f;
 	//Zakres patrzenia w górę i dół.
 	public float zakresMyszyGoraDol = 90.0f;
+	private Camera cam;
 	
 
 	// Use this for initialization
@@ -33,6 +34,7 @@ public class PlayerBehavior : CreaturesBehavior
 		Init();
 		characterControler = GetComponent<CharacterController>();
 		weapon = GetComponentInChildren<WeaponBehavior>();
+		cam = gameObject.GetComponentInChildren<Camera>();
 		// Debug.Log(characterControler);
 	}
 
@@ -113,7 +115,7 @@ public class PlayerBehavior : CreaturesBehavior
 		//Funkcja nie pozwala aby wartość przekroczyła dane zakresy.
 		myszGoraDol = Mathf.Clamp(myszGoraDol, -zakresMyszyGoraDol, zakresMyszyGoraDol);
 		//Ponieważ CharacterController nie obraca się góra/dół obracamy tylko kamerę.
-		Camera.main.transform.localRotation = Quaternion.Euler(myszGoraDol, 0, 0);
+		cam.transform.localRotation = Quaternion.Euler(myszGoraDol, 0, 0);
 		/*weapon.Updown(myszGoraDol);*/
 	}
 }
