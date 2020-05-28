@@ -9,6 +9,8 @@ TagManager:
   - PickUpAmmo
   - Terminal
   - InfoTerminal
+  - Console
+  - GUI
   layers:
   - Default
   - TransparentFX

@@ -26,7 +26,17 @@ public class PlayerBehavior : CreaturesBehavior
 	//Zakres patrzenia w górę i dół.
 	public float zakresMyszyGoraDol = 90.0f;
 	private Camera cam;
+	private bool _active = true;
 	
+	public bool Active
+	{
+		get => _active;
+		set
+		{
+			if (value != _active)
+				_active = value;
+		}
+	}
 
 	// Use this for initialization
 	void Start()
@@ -41,9 +51,13 @@ public class PlayerBehavior : CreaturesBehavior
 	// Update is called once per frame
 	void Update()
 	{
-		klawiatura();
-		myszka();
-		Attack();
+		if (_active)
+		{
+			klawiatura();
+			myszka();
+			Attack();
+			characterControler.Move(new Vector3(0,0,0));
+		}
 	}
 
 	/**

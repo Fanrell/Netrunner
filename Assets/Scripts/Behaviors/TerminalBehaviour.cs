@@ -9,11 +9,17 @@ public class TerminalBehaviour : MonoBehaviour
     private Light illumine;
     private float intens = 0.5f;
     public int intensMax = 5;
+    private GameObject terminal;
+    private GameObject gui;
  
     // Start is called before the first frame update
     void Start()
     {
         illumine = GetComponent<Light>();
+        terminal = GameObject.FindGameObjectWithTag("Console");
+        gui = GameObject.FindGameObjectWithTag("GUI");
+        Debug.Log(terminal);
+        Debug.Log(gui);
     }
 
     private void ChangeIntense()
@@ -34,7 +40,9 @@ public class TerminalBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log("Interact");
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            //           other.GetComponent<PlayerBehavior>().Active = false;
+            terminal.GetComponent<Canvas>().enabled = true;
+            gui.GetComponent<Canvas>().enabled = false;
         }
     }
 }
