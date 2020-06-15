@@ -12,7 +12,7 @@ public class PlayerEditor : Editor
       EditorGUILayout.LabelField("Max HP");
       player.maxhp = System.Convert.ToInt32(EditorGUILayout.Slider(player.maxhp, 1,10));
       EditorGUILayout.LabelField("Max Ammo");
-      player.maxamo = System.Convert.ToInt32(EditorGUILayout.Slider(player.maxamo, 1,5));
+      player.maxamo = System.Convert.ToInt32(EditorGUILayout.Slider(player.maxamo, 1,100));
       EditorGUILayout.LabelField("Szybkość poruszania się");
       player.speed = EditorGUILayout.Slider(player.speed, 1,10);
       EditorGUILayout.LabelField("Wysokość skoku");

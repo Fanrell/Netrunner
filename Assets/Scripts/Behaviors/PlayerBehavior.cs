@@ -1,9 +1,5 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
+
 
 public class PlayerBehavior : CreaturesBehavior
 {
@@ -25,18 +21,7 @@ public class PlayerBehavior : CreaturesBehavior
 	public float myszGoraDol = 0.0f;
 	//Zakres patrzenia w górę i dół.
 	public float zakresMyszyGoraDol = 90.0f;
-	private Camera cam;
-	private bool _active = true;
 	
-	public bool Active
-	{
-		get => _active;
-		set
-		{
-			if (value != _active)
-				_active = value;
-		}
-	}
 
 	// Use this for initialization
 	void Start()
@@ -44,19 +29,19 @@ public class PlayerBehavior : CreaturesBehavior
 		Init();
 		characterControler = GetComponent<CharacterController>();
 		weapon = GetComponentInChildren<WeaponBehavior>();
-		cam = gameObject.GetComponentInChildren<Camera>();
 		// Debug.Log(characterControler);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (_active)
+		klawiatura();
+		myszka();
+		Attack();
+		if(Input.GetButtonDown("Fire1") && curramo > 0)
 		{
-			klawiatura();
-			myszka();
-			Attack();
-			characterControler.Move(new Vector3(0,0,0));
+			weapon.Shoot();
+			curramo--;
 		}
 	}
 
@@ -129,7 +114,7 @@ public class PlayerBehavior : CreaturesBehavior
 		//Funkcja nie pozwala aby wartość przekroczyła dane zakresy.
 		myszGoraDol = Mathf.Clamp(myszGoraDol, -zakresMyszyGoraDol, zakresMyszyGoraDol);
 		//Ponieważ CharacterController nie obraca się góra/dół obracamy tylko kamerę.
-		cam.transform.localRotation = Quaternion.Euler(myszGoraDol, 0, 0);
+		Camera.main.transform.localRotation = Quaternion.Euler(myszGoraDol, 0, 0);
 		/*weapon.Updown(myszGoraDol);*/
 	}
 }

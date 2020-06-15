@@ -1,77 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
+﻿using UnityEngine;
 
 public class WeaponBehavior : MonoBehaviour
 {
-
-    public int gunDamage = 1;
-    public float fireRate = .25f;
-    public float weaponRange = 50f;
-    public float hitForce = 100f;
-    public Transform gunEnd;
-
+    public int damage = 5;
+    public float range = 30f;
+    public float inpactForce =30f; 
+    public ParticleSystem flash;
+    public Object hitEffect;
     public Camera cam;
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);
-    private AudioSource gunAudio;
-    private LineRenderer laserLine;
-    private float nextFire;
-    private PlayerBehavior player;
 
+    private AudioSource gunSound;
     private void Start()
     {
-        laserLine = GetComponent<LineRenderer>();
-        gunAudio = GetComponent<AudioSource>();
-        player = GameObject.Find("Player").GetComponent<PlayerBehavior>();
+        gunSound = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    public void Shoot()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time > nextFire)
+        RaycastHit hit;
+        flash.Play();
+        gunSound.Play();
+        if( Physics.Raycast(cam.transform.position,cam.transform.forward, out hit, range)   )
         {
-            nextFire = Time.time + fireRate;
-            if (player.curramo > 0)
+            Debug.DrawLine(cam.transform.position, cam.transform.forward, Color.red);
+            if(hit.transform.tag == "Enemy" || hit.transform.tag == "Player")
             {
-                StartCoroutine(ShotEffect());
-
-                Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-                Debug.DrawRay(this.transform.position, rayOrigin * weaponRange, Color.green);
-                RaycastHit hit;
-                laserLine.SetPosition(0, gunEnd.position);
-                if (Physics.Raycast(rayOrigin, cam.transform.forward, out hit, weaponRange))
-                {
-                    laserLine.SetPosition(1, hit.point);
-
-                    var health = hit.collider.GetComponent<CreaturesBehavior>();
-                    if (health != null)
-                    {
-                        health.TakeDamaged(gunDamage);
-                    }
-                    if (hit.rigidbody != null)
-                    {
-                        hit.rigidbody.AddForce(-hit.normal * hitForce);
-                    }
-                }
-                else
-                {
-                    laserLine.SetPosition(1, rayOrigin + (this.transform.up * weaponRange));
-                }
-                player.curramo--;
+                hit.transform.GetComponent<EnemyBehavior>().TakeDamaged(damage);
+                if(hit.rigidbody != null)
+                    hit.rigidbody.AddForce(-hit.normal * inpactForce);
             }
+            GameObject flar = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal)) as GameObject;
         }
     }
-    private IEnumerator ShotEffect()
-    {
-        gunAudio.Play();
-        laserLine.enabled = true;
-        yield return shotDuration;
-        laserLine.enabled = false;
-    }
 
-/*    public void Updown(float direction)
-    {
-        this.transform.localRotation = Quaternion.Euler(direction + 90, transform.localRotation.y, transform.localRotation.z);
-    }*/
 }

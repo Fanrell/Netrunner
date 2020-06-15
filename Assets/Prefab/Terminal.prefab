@@ -140,7 +140,7 @@ Light:
       e33: 1
     m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
+  m_DrawHalo: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -169,3 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ab073b8d71c8a42ad9ff49336c579d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intensMax: 5
