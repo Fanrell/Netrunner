@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyBehavior : CreaturesBehavior
 {
     public float distance = 5f;
-    private GameObject player;
+    private Collider eventPoint;
     private bool isNear = false;
     private NavMeshAgent agent;
     [SerializeField] public List<GameObject> patrol; 
@@ -17,8 +17,12 @@ public class EnemyBehavior : CreaturesBehavior
     void OnDrawGizmosSelected() 
     {
         
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position,distance);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, distance/2);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, distance/4);
     }
 
     void CreatePoint()
@@ -41,16 +45,15 @@ public class EnemyBehavior : CreaturesBehavior
     void Start()
     {
 
-                point = new GameObject();
-
-        player = GameObject.FindGameObjectWithTag("Player");
+        point = new GameObject();
+        GetComponent<SphereCollider>().radius = distance;
         agent = gameObject.GetComponent<NavMeshAgent>();
         CreatePoint();
         patrol.Add(point);
         agent.speed = speed;
     }
 
-    void DistanceCheck(Transform target, Transform follower, float distance)
+/*    void DistanceCheck(Transform target, Transform follower, float distance)
     {
         float pos = Vector3.Distance(target.position,follower.position);
         if(distance >= pos && pos >= 1.2f)
@@ -62,7 +65,7 @@ public class EnemyBehavior : CreaturesBehavior
             follower.GetComponent<EnemyBehavior>().toggleStatus(false);
         }
 
-    }
+    }*/
 
     Vector3 Patrol()
     {
@@ -75,21 +78,25 @@ public class EnemyBehavior : CreaturesBehavior
 
     // Update is called once per frame
     void Update()
-    {
-        DistanceCheck(player.transform,transform,distance);        
-        if(isNear)
-        {
-            agent.SetDestination(player.transform.position);
-        }
-        else
-        {
+    {       if (isNear == false)
             agent.SetDestination(Patrol());
-        }
 
+        else if (isNear == true)
+        {
+            agent.SetDestination(eventPoint.transform.position);
+        }
     }
 
-    public void toggleStatus(bool status)
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.transform.tag == "Player")
+            toggleStatus(true, other);
+        Debug.Log(other);
+    }
+
+    public void toggleStatus(bool status, Collider player)
     {
         isNear = status;
+        eventPoint = player;
     }
 }

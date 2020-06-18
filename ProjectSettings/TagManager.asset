@@ -11,6 +11,7 @@ TagManager:
   - InfoTerminal
   - Console
   - GUI
+  - Bullet
   layers:
   - Default
   - TransparentFX
