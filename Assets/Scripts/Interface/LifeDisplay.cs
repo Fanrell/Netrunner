@@ -14,6 +14,6 @@ public class LifeDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lifeDisplay.text = "Life:\n" + player.currhp + " / " + player.maxhp;
+        //lifeDisplay.text = "Life:\n" + player.currhp + " / " + player.maxhp;
     }
 }
