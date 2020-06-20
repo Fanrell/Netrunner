@@ -8,7 +8,6 @@ using UnityEditor;
 public class EnemyEditor : Editor
 {   
     EnemyBehavior enemy;
-    GameObject enemyobject;
     public override void OnInspectorGUI()
     {
         enemy = (EnemyBehavior)target;
@@ -18,9 +17,11 @@ public class EnemyEditor : Editor
         GUILayout.Label("Speed: ");
         enemy.speed = EditorGUILayout.Slider(enemy.speed,1,10);
         GUILayout.Label("Distance of Sight: ");
-        enemy.distance = EditorGUILayout.Slider(enemy.distance,1,15);
+        enemy.distance = EditorGUILayout.Slider(enemy.distance, 1, 15);
+        GUILayout.Label("Period between shoots ");
+        enemy.periodShoot = EditorGUILayout.Slider(enemy.periodShoot, 1, 10);
         GUILayout.Label("Patrols points");
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("patrol"),true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("pointsList"),true);
         serializedObject.ApplyModifiedProperties();
         
         

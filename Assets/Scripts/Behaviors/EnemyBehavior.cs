@@ -6,23 +6,24 @@ using UnityEngine.AI;
 public class EnemyBehavior : CreaturesBehavior
 {
     public float distance = 5f;
+    public float periodShoot = 0f;
+    [SerializeField]public GameObject pointsList;
     private Collider eventPoint;
     private bool isNear = false;
     private NavMeshAgent agent;
-    [SerializeField] public List<GameObject> patrol; 
+    private List<Transform> patrol = new List<Transform>(); 
     private int patrolsPoint = 0;
-    GameObject point;
-    // Start is called before the first frame update
+    private GameObject point;
+    private float timePeriodShoot = 0f;
+
 
     void OnDrawGizmosSelected() 
     {
         
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position,distance);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, distance/2);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, distance/4);
+        Gizmos.DrawWireSphere(transform.position, distance/2);
     }
 
     void CreatePoint()
@@ -42,30 +43,27 @@ public class EnemyBehavior : CreaturesBehavior
     {
         Init();
     }
+    
+    private void GetPoints()
+    {
+        Transform[] points = pointsList.GetComponentsInChildren<Transform>();
+        foreach(Transform x in points)
+        {
+            patrol.Add(x);
+        }
+    }
+
     void Start()
     {
-
+        GetPoints();
         point = new GameObject();
         GetComponent<SphereCollider>().radius = distance;
         agent = gameObject.GetComponent<NavMeshAgent>();
         CreatePoint();
-        patrol.Add(point);
+        patrol.Add(point.transform);
         agent.speed = speed;
     }
 
-/*    void DistanceCheck(Transform target, Transform follower, float distance)
-    {
-        float pos = Vector3.Distance(target.position,follower.position);
-        if(distance >= pos && pos >= 1.2f)
-        {
-            follower.GetComponent<EnemyBehavior>().toggleStatus(true);
-        }
-        else
-        {
-            follower.GetComponent<EnemyBehavior>().toggleStatus(false);
-        }
-
-    }*/
 
     Vector3 Patrol()
     {
@@ -83,7 +81,7 @@ public class EnemyBehavior : CreaturesBehavior
 
         else if (isNear == true)
         {
-            agent.SetDestination(eventPoint.transform.position);
+            behaviourCheck();
         }
     }
 
@@ -91,7 +89,24 @@ public class EnemyBehavior : CreaturesBehavior
     {
         if(other.transform.tag == "Player")
             toggleStatus(true, other);
-        Debug.Log(other);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Player")
+            toggleStatus(false, null);
+    }
+
+    private void behaviourCheck()
+    {
+        agent.SetDestination(eventPoint.transform.position);
+        if(eventPoint.transform.tag == "Player" && Vector3.Distance(this.transform.position, eventPoint.transform.position) <= distance / 2)
+        {
+            if(Time.time >= timePeriodShoot)
+            {
+                Debug.Log("Shoot");
+                timePeriodShoot = Time.time + periodShoot;
+            }
+        }
     }
 
     public void toggleStatus(bool status, Collider player)
