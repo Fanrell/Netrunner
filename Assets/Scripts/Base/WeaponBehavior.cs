@@ -62,9 +62,9 @@ public class WeaponBehavior : MonoBehaviour
         if (type == "slow")
             slowFlash.Play();
         gunSound.Play();
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
+        if (Physics.Raycast(dmgFlash.transform.position, dmgFlash.transform.right, out hit, range))
         {
-            Debug.DrawLine(cam.transform.position, cam.transform.forward, Color.red);
+            Debug.DrawLine(dmgFlash.transform.position, dmgFlash.transform.right, Color.red);
             if (hit.transform.tag == "Enemy")
             {
                 hit.transform.GetComponent<EnemyBehavior>().TakeDamaged(damage, type);
