@@ -9,6 +9,7 @@ public class CreaturesBehavior : MonoBehaviour
     public float speed;//szybkość poruszania się
     public int maxamo;//maksymalne ammo
     public int curramo;//obecne ammo
+    public float slowTime;
 
 
 
@@ -20,25 +21,27 @@ public class CreaturesBehavior : MonoBehaviour
     }
 
 
-
-    public virtual void Attack()
+    public virtual void TakeDamaged(int dmg, string type)
     {
-        //   Debug.LogWarning("unimplemented method");
-    }
-
-    public virtual void TakeDamaged(int dmg)
-    {
-        currhp -= dmg;
-        Debug.Log("HP: " + currhp);
-        if (currhp <= 0)
+        if (type == "damageble")
         {
-            gameObject.SetActive(false);
-            if(gameObject.tag == "Enemy")
+            currhp -= dmg;
+            Debug.Log("HP: " + currhp);
+            if (currhp <= 0)
             {
-                ChaosBehaviour.dmgIncreas();
-                ChaosBehaviour.hpIncreas();
-                Debug.Log(ChaosBehaviour.HpBoost);
+                gameObject.SetActive(false);
+                if (gameObject.tag == "Enemy")
+                {
+                    ChaosBehaviour.dmgIncreas();
+                    ChaosBehaviour.hpIncreas();
+                    Debug.Log(ChaosBehaviour.HpBoost);
+                }
             }
+        }
+        if (type == "slow")
+        {
+            speed -= dmg;
+            slowTime = Time.time + 5f;
         }
     }
 

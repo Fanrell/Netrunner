@@ -21,6 +21,8 @@ public class PlayerBehavior : CreaturesBehavior
 	public float myszGoraDol = 0.0f;
 	//Zakres patrzenia w górę i dół.
 	public float zakresMyszyGoraDol = 90.0f;
+	private float coolDown = 0f;
+	private float maxSpeed;
 	
 
 	// Use this for initialization
@@ -29,6 +31,7 @@ public class PlayerBehavior : CreaturesBehavior
 		Init();
 		characterControler = GetComponent<CharacterController>();
 		weapon = GetComponentInChildren<WeaponBehavior>();
+		maxSpeed = speed;
 		// Debug.Log(characterControler);
 	}
 
@@ -37,11 +40,19 @@ public class PlayerBehavior : CreaturesBehavior
 	{
 		klawiatura();
 		myszka();
-		Attack();
 		if(Input.GetButtonDown("Fire1") && curramo > 0)
 		{
 			weapon.Shoot();
 			curramo--;
+		}
+		if (Input.GetAxis("Mouse ScrollWheel") != 0 && Time.time > coolDown)
+		{
+			weapon.AttackTypeSwitch();
+			coolDown = Time.time + 2f;
+		}
+		if (Time.time > slowTime)
+		{
+			speed = maxSpeed;
 		}
 	}
 
@@ -77,11 +88,11 @@ public class PlayerBehavior : CreaturesBehavior
 		//Bieganie
 		if (Input.GetKeyDown("left shift"))
 		{
-			speed += predkoscBiegania;
+			maxSpeed += predkoscBiegania;
 		}
 		else if (Input.GetKeyUp("left shift"))
 		{
-			speed -= predkoscBiegania;
+			maxSpeed -= predkoscBiegania;
 		}
 
 		//Tworzymy wektor odpowiedzialny za ruch.

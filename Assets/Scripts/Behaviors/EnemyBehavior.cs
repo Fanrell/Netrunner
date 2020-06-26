@@ -15,6 +15,8 @@ public class EnemyBehavior : CreaturesBehavior
     private int patrolsPoint = 0;
     private GameObject point;
     private float timePeriodShoot = 0f;
+    private float maxSpeed;
+    public WeaponBehavior weapon;
 
 
     void OnDrawGizmosSelected() 
@@ -61,7 +63,8 @@ public class EnemyBehavior : CreaturesBehavior
         agent = gameObject.GetComponent<NavMeshAgent>();
         CreatePoint();
         patrol.Add(point.transform);
-        agent.speed = speed;
+        maxSpeed = speed;
+        weapon = GetComponentInChildren<WeaponBehavior>();
     }
 
 
@@ -76,12 +79,18 @@ public class EnemyBehavior : CreaturesBehavior
 
     // Update is called once per frame
     void Update()
-    {       if (isNear == false)
+    {
+        agent.speed = speed;
+        if (isNear == false)
             agent.SetDestination(Patrol());
 
         else if (isNear == true)
         {
             behaviourCheck();
+        }
+        if(Time.time > slowTime)
+        {
+            agent.speed = maxSpeed;
         }
     }
 
@@ -102,8 +111,8 @@ public class EnemyBehavior : CreaturesBehavior
         if(eventPoint.transform.tag == "Player" && Vector3.Distance(this.transform.position, eventPoint.transform.position) <= distance / 2)
         {
             if(Time.time >= timePeriodShoot)
-            {
-                Debug.Log("Shoot");
+            {   
+                weapon.Shoot(Random.Range(1,101));
                 timePeriodShoot = Time.time + periodShoot;
             }
         }
