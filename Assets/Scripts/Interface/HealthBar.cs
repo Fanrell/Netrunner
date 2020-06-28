@@ -14,18 +14,19 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //lifeDisplay.text = "Life:\n" + player.currhp + " / " + player.maxhp;
+        SetMaxHealth();
+        SetHealth();
 
     }
 
-    public void SetMaxHealth(int health)
+    public void SetMaxHealth()
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.maxValue = player.maxhp;
+        slider.value = player.currhp;
     }
 
-    public void SetHealth(int health)
+    public void SetHealth()
     {
-        slider.value = health;
+        slider.value = player.currhp;
     }
 }

@@ -7,16 +7,18 @@ public class EnemyBehavior : CreaturesBehavior
 {
     public float distance = 5f;
     public float periodShoot = 0f;
-    [SerializeField]public GameObject pointsList;
+    [SerializeField]public GameObject[] pointsList;
     private Collider eventPoint;
     private bool isNear = false;
     private NavMeshAgent agent;
-    private List<Transform> patrol = new List<Transform>(); 
+    [SerializeField] public List<Transform> patrol = new List<Transform>(); 
     private int patrolsPoint = 0;
     private GameObject point;
     private float timePeriodShoot = 0f;
     private float maxSpeed;
+    private int mod = 1;
     public WeaponBehavior weapon;
+
 
 
     void OnDrawGizmosSelected() 
@@ -34,25 +36,28 @@ public class EnemyBehavior : CreaturesBehavior
         point.transform.position = new Vector3(point.transform.position.x,0,point.transform.position.z);
     }
     
-    override protected void Init()
+    override public void Init()
     {
+        weapon = GetComponentInChildren<WeaponBehavior>();
         maxhp *= ChaosBehaviour.HpBoost;
         curramo = maxamo;
         currhp = maxhp;
+        weapon.damage *= ChaosBehaviour.DmgBoost;
     }
 
     private void Awake()
     {
         Init();
     }
-    
+
     private void GetPoints()
     {
-        Transform[] points = pointsList.GetComponentsInChildren<Transform>();
-        foreach(Transform x in points)
+        foreach (GameObject x in pointsList)
         {
-            patrol.Add(x);
+            patrol.Add(x.transform);
         }
+
+
     }
 
     void Start()
@@ -64,16 +69,18 @@ public class EnemyBehavior : CreaturesBehavior
         CreatePoint();
         patrol.Add(point.transform);
         maxSpeed = speed;
-        weapon = GetComponentInChildren<WeaponBehavior>();
+
     }
 
 
     Vector3 Patrol()
     {
-        if(Vector3.Distance(transform.position,patrol[patrolsPoint].transform.position) <= 2)
-            patrolsPoint++;
-        if(patrolsPoint>=patrol.Count)
-            patrolsPoint = 0;
+        if (Vector3.Distance(transform.position, patrol[patrolsPoint].transform.position) <= 2)
+            patrolsPoint += mod;
+        if (patrolsPoint == patrol.Count - 1)
+            mod = -1;
+        if (patrolsPoint == 0)
+            mod = 1;
         return patrol[patrolsPoint].transform.position;
     }
 
@@ -88,7 +95,7 @@ public class EnemyBehavior : CreaturesBehavior
         {
             behaviourCheck();
         }
-        if(Time.time > slowTime)
+        if (Time.time > slowTime)
         {
             agent.speed = maxSpeed;
         }

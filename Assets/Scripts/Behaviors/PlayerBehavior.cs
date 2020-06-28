@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 
 public class PlayerBehavior : CreaturesBehavior
@@ -15,7 +16,7 @@ public class PlayerBehavior : CreaturesBehavior
 	public float aktualnaWysokoscSkoku = 0f;
 	//Predkosc biegania.
 	public float predkoscBiegania = 7.0f;
-
+	public int money = 0;
 	//Czulość myszki (Sensitivity)
 	public float czuloscMyszki = 3.0f;
 	public float myszGoraDol = 0.0f;
@@ -32,27 +33,31 @@ public class PlayerBehavior : CreaturesBehavior
 		characterControler = GetComponent<CharacterController>();
 		weapon = GetComponentInChildren<WeaponBehavior>();
 		maxSpeed = speed;
+		money = 0;
 		// Debug.Log(characterControler);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		klawiatura();
-		myszka();
-		if(Input.GetButtonDown("Fire1") && curramo > 0)
+		if (Time.timeScale != 0)
 		{
-			weapon.Shoot();
-			curramo--;
-		}
-		if (Input.GetAxis("Mouse ScrollWheel") != 0 && Time.time > coolDown)
-		{
-			weapon.AttackTypeSwitch();
-			coolDown = Time.time + 2f;
-		}
-		if (Time.time > slowTime)
-		{
-			speed = maxSpeed;
+			klawiatura();
+			myszka();
+			if (Input.GetButtonDown("Fire1") && curramo > 0)
+			{
+				weapon.Shoot();
+				curramo--;
+			}
+			if (Input.GetAxis("Mouse ScrollWheel") != 0 && Time.time > coolDown)
+			{
+				weapon.AttackTypeSwitch();
+				coolDown = Time.time + 2f;
+			}
+			if (Time.time > slowTime)
+			{
+				speed = maxSpeed;
+			}
 		}
 	}
 

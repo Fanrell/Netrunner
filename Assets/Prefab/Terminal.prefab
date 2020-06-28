@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7509321495018782585}
   - component: {fileID: 7509321495018782586}
   - component: {fileID: 7509321495018782581}
+  - component: {fileID: 8949012686774110245}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Terminal
@@ -169,4 +170,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ab073b8d71c8a42ad9ff49336c579d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensMax: 5
+  intensMax: 4
+--- !u!136 &8949012686774110245
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7509321495018782587}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

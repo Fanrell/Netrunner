@@ -11,6 +11,7 @@ public class TerminalBehaviour : MonoBehaviour
     public int intensMax = 5;
     private GameObject terminal;
     private GameObject gui;
+    public HackPoint hcp;
  
     // Start is called before the first frame update
     void Start()
@@ -37,12 +38,15 @@ public class TerminalBehaviour : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.F))
+        if (other.gameObject.tag == "Player" && Input.GetButtonDown("Fire2"))
         {
             Debug.Log("Interact");
             //           other.GetComponent<PlayerBehavior>().Active = false;
             terminal.GetComponent<Canvas>().enabled = true;
             gui.GetComponent<Canvas>().enabled = false;
+            Time.timeScale = 0f;
+            HackMenu.hcp = new HackPoint();
+
         }
     }
 }

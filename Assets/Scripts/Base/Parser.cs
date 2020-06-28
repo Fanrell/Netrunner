@@ -1,28 +1,34 @@
-﻿class Parser
+﻿using UnityEngine;
+
+class Parser
 {
     private char prompt;
     private string[] commandList;
-    public Parser(char prompt, string[] commandList)
+    public Parser(string prompt, string[] commandList)
     {
-        this.prompt = prompt;
+        this.prompt = prompt[0];
         this.commandList = commandList;
     }
 
     public bool validCommand(string command)
     {
         bool isValid = false;
-        if (command[0] == prompt) isValid = true;
+        if (command != ""&&command[0] == prompt) isValid = true;
         return isValid;
     }
 
     public int validOption(string command)
     {
-        int i = 0;
-        foreach (string x in commandList)
-        {
-            if (x.ToLower() == command.Split(prompt)[1].ToLower()) break;
-            i++;
+        if (validCommand(command))
+            {
+            int i = 0;
+            foreach (string x in commandList)
+            {
+                if (x.ToLower() == command.Split(prompt)[1].ToLower()) break;
+                i++;
+            }
+            return i;
         }
-        return i;
+        return -1;
     }
 }

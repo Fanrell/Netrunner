@@ -8,6 +8,9 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        ChaosBehaviour.SpawnBoost = 1;
+        ChaosBehaviour.HpBoost = 1;
+        ChaosBehaviour.DmgBoost = 1;
     }
 
     public void GoToSettingsMenu()

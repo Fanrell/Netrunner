@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class CreaturesBehavior : MonoBehaviour
@@ -10,11 +11,12 @@ public class CreaturesBehavior : MonoBehaviour
     public int maxamo;//maksymalne ammo
     public int curramo;//obecne ammo
     public float slowTime;
+    public float dTime;
 
 
 
     // Start is called before the first frame update
-    protected virtual void Init()
+    public virtual void Init()
     {
         currhp = maxhp;
         curramo = maxamo;
@@ -32,15 +34,21 @@ public class CreaturesBehavior : MonoBehaviour
                 gameObject.SetActive(false);
                 if (gameObject.tag == "Enemy")
                 {
+                    dTime = Time.time;
                     ChaosBehaviour.dmgIncreas();
                     ChaosBehaviour.hpIncreas();
+                    ChaosBehaviour.spawnIncreas();
                     Debug.Log(ChaosBehaviour.HpBoost);
+                }
+                if(gameObject.tag == "Player")
+                {
+                    SceneManager.LoadScene("Menu");
                 }
             }
         }
         if (type == "slow")
         {
-            speed -= dmg;
+            speed /= dmg;
             slowTime = Time.time + 5f;
         }
     }
